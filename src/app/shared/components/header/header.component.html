@@ -1,0 +1,39 @@
+<!-- *** TOPBAR ***-->
+<div id="top">
+    <div class="container">
+        <div class="col-md-6 offer">
+
+        </div>
+        <div class="col-md-6" data-animate="fadeInDown">
+            <ul class="menu">
+                <li><a [routerLink]="['login']" data-toggle="modal" data-target="#login-modal">Login</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- *** TOP BAR END *** -->
+<!-- *** NAVBAR *** -->
+<div class="navbar navbar-default yamm" role="navigation" id="navbar">
+    <div class="container">
+        <div class="navbar-header">
+            <div class="navbar-buttons">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation">
+                    <span class="sr-only">Toggle navigation</span>
+                    <i class="fa fa-align-justify"></i>
+                </button>
+            </div>
+        </div>
+        <!--/.navbar-header -->
+        <div class="navbar-collapse collapse" id="navigation">
+            <ul class="nav navbar-nav navbar-left">
+                <li class="active">
+                    <a [routerLink]="['home']">Home</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- /.container -->
+</div>
+<!-- /#navbar -->
+<!-- *** NAVBAR END *** -->

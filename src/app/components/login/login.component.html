@@ -1,3 +1,34 @@
-<p>
-  login works!
-</p>
+<div class="container">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="box">
+        <h1>Login</h1>
+  
+        <p class="lead">Already our customer?</p>
+        <hr>
+  
+        <form novalidate (ngSubmit)="signUp()" [formGroup]="mainForm">
+            <div class="form-group">
+                <div [ngClass]="{'has-error': displayMessage.email }">
+                  <input class="form-control" placeholder="email" formControlName="email" />
+                  <span class="help-block" *ngIf="displayMessage.email">
+                    {{displayMessage.email}}
+                  </span>
+                </div>
+              </div>
+  
+              <div class="form-group">
+                <div [ngClass]="{'has-error': displayMessage.password }">
+                  <input class="form-control" type="password" placeholder="Password" formControlName="password" />
+                  <span class="help-block" *ngIf="displayMessage.password">
+                    {{displayMessage.password}}
+                  </span>
+                </div>
+              </div>
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary btn-block" [disabled]="!mainForm.valid"><i class="fa fa-sign-in"></i> Log in</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
