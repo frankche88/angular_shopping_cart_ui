@@ -6,6 +6,8 @@ import { GenericValidator } from '../../shared/validators/generic-validator';
 import { AuthService } from 'ng2-ui-auth';
 import { Router } from '@angular/router';
 import { debounceTime } from 'rxjs/operators';
+import { CustomValidators } from 'ng2-validation';
+
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
@@ -27,8 +29,9 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
 
         this.validationMessages = {
             email: {
-                required: 'email is required.',
-                minlength: 'email must be at least 5 characters.'
+                required: 'Email is required.',
+                minlength: 'Email must be at least 4 characters.',
+                email: 'Please enter a valid email address.'
             },
             password: {
                 required: 'Password is required.',
@@ -42,8 +45,8 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
     ngOnInit(): void {
 
         this.mainForm = this.fb.group({
-            email: new FormControl('', [ Validators.required, Validators.minLength(5)]),
-            password: new FormControl('', [ Validators.required, Validators.minLength(5)])
+            email: new FormControl('member@test.com', [ Validators.required, Validators.minLength(5), CustomValidators.email]),
+            password: new FormControl('P@$$w0rd', [ Validators.required, Validators.minLength(5)])
 
         });
     }

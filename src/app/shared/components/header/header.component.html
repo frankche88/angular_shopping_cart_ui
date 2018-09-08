@@ -2,11 +2,14 @@
 <div id="top">
     <div class="container">
         <div class="col-md-6 offer">
-
+         
         </div>
         <div class="col-md-6" data-animate="fadeInDown">
             <ul class="menu">
-                <li><a [routerLink]="['login']" data-toggle="modal" data-target="#login-modal">Login</a>
+                <li *ngIf="!isAuthenticated()"><a [routerLink]="['login']">Login</a>
+                </li>
+                <li *ngIf="isAuthenticated()" (click)="logOut()">
+                      <span class="user-name">  Hi {{userName}} |</span> <a><i class="fa fa-sign-out fa-fw"></i>LogOut</a>
                 </li>
             </ul>
         </div>

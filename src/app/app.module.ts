@@ -16,6 +16,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { JsonInterceptorService } from './shared/services/json-interceptor.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ProductService } from './services/product.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,7 +27,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
     ShoppingCartComponent,
     HeaderComponent,
     FooterComponent
-    
   ],
   imports: [
     ReactiveFormsModule,
@@ -37,7 +37,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
     appRoutes,
     Ng2UiAuthModule.forRoot(AuthConfig)
   ],
-  providers: [JsonInterceptorService,
+  providers: [JsonInterceptorService, ProductService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JsonInterceptorService,
