@@ -9,7 +9,7 @@
                 <li *ngIf="!isAuthenticated()"><a [routerLink]="['login']">Login</a>
                 </li>
                 <li *ngIf="isAuthenticated()" (click)="logOut()">
-                      <span class="user-name">  Hi {{userName}} |</span> <a><i class="fa fa-sign-out fa-fw"></i>LogOut</a>
+                      <span class="user-name">  Hi {{getUserName()}} |</span> <a><i class="fa fa-sign-out fa-fw"></i>LogOut</a>
                 </li>
             </ul>
         </div>

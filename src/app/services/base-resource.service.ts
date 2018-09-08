@@ -1,8 +1,7 @@
-import { Response } from '@angular/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { map, catchError } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 
 export abstract class BaseResourceService<T> {
 
@@ -16,23 +15,20 @@ export abstract class BaseResourceService<T> {
 
     public getAll(): Observable<T[]> {
 
-        return this._http.get(`${this.baseUrl}`).pipe(
-            map((response: Response) => response.json()),
-            catchError((error: any) => Observable.throw(error || 'Server error')));
+        return this._http.get<T[]>(`${this.baseUrl}`).pipe(
+         catchError((error: any) => Observable.throw(error || 'Server error')));
     }
 
     public get(id: number): Observable<T> {
 
         return this._http
-            .get(`${this.baseUrl}/${id}`)
-            .pipe(map((response: Response) => response.json()),
-             catchError((error: any) => Observable.throw(error || 'Server error')));
+            .get<T>(`${this.baseUrl}/${id}`)
+            .pipe(catchError((error: any) => Observable.throw(error || 'Server error')));
     }
 
     private insert(entity: T): Observable<T> {
 
-        return this._http.post(this.baseUrl, entity).pipe(
-            map((response: Response) => response.json()),
+        return this._http.post<T>(this.baseUrl, entity).pipe(
             catchError((error: any) => Observable.throw(error || 'Server error')));
     }
 
@@ -40,8 +36,7 @@ export abstract class BaseResourceService<T> {
 
         const url = `${this.baseUrl}/${id}`;
         return this._http
-            .put(url, entity).pipe(
-            map(() => entity),
+            .put<T>(url, entity).pipe(
             catchError((error: any) => Observable.throw(error || 'Server error')));
     }
 
@@ -49,7 +44,7 @@ export abstract class BaseResourceService<T> {
 
         const url = `${this.baseUrl}/${id}`;
         return this._http
-            .delete(url).pipe(
+            .delete<any>(url).pipe(
             catchError((error: any) => Observable.throw(error || 'Server error')));
     }
 

@@ -13,14 +13,10 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   public userName: string;
   private subscription: Subscription = new Subscription();
 
-  constructor(private _authService: AuthService, private _router: Router,
-    private _changeDetectorRef: ChangeDetectorRef) { }
+  constructor(private _authService: AuthService, private _router: Router) { }
 
   ngOnInit() {
-    if (this._authService.getPayload() !== undefined) {
 
-      this.userName = this._authService.getPayload().sub;
-    }
   }
 
   ngAfterViewInit(): void { }
@@ -49,4 +45,9 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     return this._authService.isAuthenticated();
   }
 
+  getUserName(): boolean {
+
+    return (this._authService.getPayload() !== undefined) ?
+          this.userName = this._authService.getPayload().sub : '';
+  }
 }
