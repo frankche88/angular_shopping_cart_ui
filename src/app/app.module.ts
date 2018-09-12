@@ -17,7 +17,6 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { JsonInterceptorService } from './shared/services/json-interceptor.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ProductService } from './services/product.service';
-import { AdvantageComponent } from './components/home/advantage/advantage.component';
 import { ProductItemComponent } from './components/home/product-item/product-item.component';
 import { OrderDetailComponent } from './components/order/order-detail/order-detail.component';
 import { CustomerSectionComponent } from './components/order/customer-section/customer-section.component';
@@ -33,7 +32,6 @@ import { CustomerSectionComponent } from './components/order/customer-section/cu
     HeaderComponent,
     FooterComponent,
     ProductItemComponent,
-    AdvantageComponent,
     OrderDetailComponent,
     CustomerSectionComponent
   ],
