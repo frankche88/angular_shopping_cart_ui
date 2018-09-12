@@ -1,0 +1,27 @@
+<div class="item" class="col-md-3">
+  <div class="product">
+    <div class="flip-container">
+      <div class="flipper">
+        <div class="front">
+          <a [routerLink]="['/product', product.id]">
+            <img [src]="product.pictureUrl" alt="product.name" class="img-responsive">
+          </a>
+        </div>
+        <div class="back">
+          <a [routerLink]="['/product', product.id]">
+            <img [src]="product.pictureUrl" alt="product.name" class="img-responsive">
+          </a>
+        </div>
+      </div>
+    </div>
+    <a [routerLink]="['/product', product.id]" class="invisible">
+      <img [src]="product.pictureUrl" alt="product.name" class="img-responsive">
+    </a>
+    <div class="text">
+      <h3><a [routerLink]="['/product', product.id]">{{product.name}}</a></h3>
+      <p class="price">{{product.price | currency}}</p>
+    </div>
+    <!-- /.text -->
+  </div>
+  <!-- /.product -->
+</div>

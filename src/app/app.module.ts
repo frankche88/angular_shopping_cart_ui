@@ -17,6 +17,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { JsonInterceptorService } from './shared/services/json-interceptor.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ProductService } from './services/product.service';
+import { AdvantageComponent } from './components/home/advantage/advantage.component';
+import { ProductItemComponent } from './components/home/product-item/product-item.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,7 +29,9 @@ import { ProductService } from './services/product.service';
     ProductComponent,
     ShoppingCartComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    ProductItemComponent,
+    AdvantageComponent
   ],
   imports: [
     ReactiveFormsModule,

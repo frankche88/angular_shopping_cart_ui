@@ -5,5 +5,5 @@ export class Product extends BaseEntity {
     name: string;
     description: string;
     price: number;
-    pictureFileName: string;
+    pictureUrl: string;
 }
