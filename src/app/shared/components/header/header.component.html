@@ -8,8 +8,9 @@
             <ul class="menu">
                 <li *ngIf="!isAuthenticated()"><a [routerLink]="['login']">Login</a>
                 </li>
-                <li *ngIf="isAuthenticated()" (click)="logOut()">
-                      <span class="user-name">  Hi {{getUserName()}} |</span> <a><i class="fa fa-sign-out fa-fw"></i>LogOut</a>
+                <li *ngIf="isAuthenticated()">
+                    <span class="user-name"> Hi <a  [routerLink]="['order']">  {{getUserName()}} </a>|</span>
+                    <a (click)="logOut()"><i class="fa fa-sign-out fa-fw" ></i>LogOut</a>
                 </li>
             </ul>
         </div>
@@ -21,8 +22,8 @@
     <div class="container">
         <div class="navbar-header">
                 <a class="navbar-brand home" [routerLink]="['home']" data-animate-hover="bounce">
-                        <img src="https://www.agromaquinaria.es/marcas/logos/1160.gif" alt="Amazon logo" class="hidden-xs">
-                        <img src="https://www.agromaquinaria.es/marcas/logos/1160.gif" alt="OAmazon logo" class="visible-xs"><span class="sr-only">Obaju - go to homepage</span>
+                        <img src="https://www.agromaquinaria.es/marcas/logos/1160.gif" alt="logo" class="hidden-xs">
+                        <img src="https://www.agromaquinaria.es/marcas/logos/1160.gif" alt="logo" class="visible-xs"><span class="sr-only">Obaju - go to homepage</span>
                 </a>
             <div class="navbar-buttons">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation">
