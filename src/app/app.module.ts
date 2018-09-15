@@ -20,6 +20,7 @@ import { ProductService } from './services/product.service';
 import { ProductItemComponent } from './components/home/product-item/product-item.component';
 import { OrderDetailComponent } from './components/order/order-detail/order-detail.component';
 import { CustomerSectionComponent } from './components/order/customer-section/customer-section.component';
+import { ShoppingCartService } from './services/shopping-cart.service';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { CustomerSectionComponent } from './components/order/customer-section/cu
     Ng2UiAuthModule.forRoot(AuthConfig)
   ],
   providers: [JsonInterceptorService, ProductService,
+    ShoppingCartService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JsonInterceptorService,

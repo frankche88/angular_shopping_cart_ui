@@ -20,7 +20,8 @@ export abstract class BaseResourceMockService<T extends BaseEntity> {
 
     private insert(entity: T): Observable<T> {
 
-        entity.id = this.collection.length + 1;
+        if (entity.id === 0) {  entity.id = this.collection.length + 1; }
+
         this.collection.push(entity);
         return of(entity);
     }
@@ -37,9 +38,10 @@ export abstract class BaseResourceMockService<T extends BaseEntity> {
 
     delete(id: number): Observable<any> {
 
-        this.collection.splice(id, 1);
-
-        return of(1);
+        const item = this.collection.find(o => o.id === id);
+        const index = this.collection.indexOf(item);
+        this.collection.splice(index, 1);
+        return of(id);
     }
 
     save(entity: T, id: number): Observable<T> {

@@ -21,7 +21,7 @@ const routes: Routes = [
         component: OrderComponent
     },
     {
-        path: 'shopping-cart',
+        path: 'shopping-cart/:id',
         component: ShoppingCartComponent
     },
     {
