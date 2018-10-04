@@ -14,7 +14,7 @@ export abstract class BaseResourceService<T> {
     }
 
     public getAll(): Observable<T[]> {
-
+ 
         return this._http.get<T[]>(`${this.baseUrl}`).pipe(
          catchError((error: any) => Observable.throw(error || 'Server error')));
     }

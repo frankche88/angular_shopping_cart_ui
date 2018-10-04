@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl : 'https://shoppingcartgateway-courteous-crane.cfapps.io/'
+  apiUrl : 'http://localhost:5000/'
 };
 
 /*

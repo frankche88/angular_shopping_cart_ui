@@ -13,9 +13,10 @@ export class HomeComponent implements OnInit {
   products: Product[];
 
   ngOnInit() {
-
+    console.log('1');
       this._productService.getAll().subscribe(
       (response: any) => {
+        console.log(response);
          this.products = response;
       },
       (error: any) => {

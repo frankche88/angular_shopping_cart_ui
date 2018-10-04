@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
 import { Product } from '../models/product';
-import { products } from '../data/product.data';
-import { BaseResourceMockService } from './base-resource-mock.service';
-
+import { BaseResourceService } from './base-resource.service';
+import { HttpClient } from '@angular/common/http';
 @Injectable()
-export class ProductService extends BaseResourceMockService <Product> {
+export class ProductService extends BaseResourceService <Product> {
 
-    constructor() {
-       super(products);
+    constructor(http: HttpClient) {
+       
+        super(http, 'products');
     }
 
 }
