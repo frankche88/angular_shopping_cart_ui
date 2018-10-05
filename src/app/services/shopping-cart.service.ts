@@ -21,9 +21,7 @@ export class ShoppingCartService extends BaseResourceMockService<ShoppingCart> {
             this.shoppingCart.id = buyerId;
             this.shoppingCart.buyerId = buyerId;
             this.shoppingCart.items = [];
-            this.shoppingCart.items.push(
-                new ShoppingCartItem(product.id, product.name,
-                    product.pictureUrl, product.price));
+            this.shoppingCart.items.push( new ShoppingCartItem(product.id, product.name,product.pictureUrl, product.price));
 
         } else {
 

@@ -27,7 +27,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
 
       (params): void => {
 
-        const id: number = Number(params['id']);
+        const id: number = Number(params['buyerId']);
 
         this.getShoppingCart(id);
       });

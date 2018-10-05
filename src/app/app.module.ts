@@ -21,6 +21,8 @@ import { ProductItemComponent } from './components/home/product-item/product-ite
 import { OrderDetailComponent } from './components/order/order-detail/order-detail.component';
 import { CustomerSectionComponent } from './components/order/customer-section/customer-section.component';
 import { ShoppingCartService } from './services/shopping-cart.service';
+import { AuthorizationGuard } from './guards/authorization.guard';
+import { FirstShopComponent } from './components/shopping-cart/first-shop/first-shop.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import { ShoppingCartService } from './services/shopping-cart.service';
     FooterComponent,
     ProductItemComponent,
     OrderDetailComponent,
-    CustomerSectionComponent
+    CustomerSectionComponent,
+    FirstShopComponent
   ],
   imports: [
     ReactiveFormsModule,
@@ -45,7 +48,7 @@ import { ShoppingCartService } from './services/shopping-cart.service';
     appRoutes,
     Ng2UiAuthModule.forRoot(AuthConfig)
   ],
-  providers: [JsonInterceptorService, ProductService,
+  providers: [AuthorizationGuard,JsonInterceptorService, ProductService,
     ShoppingCartService,
     {
       provide: HTTP_INTERCEPTORS,

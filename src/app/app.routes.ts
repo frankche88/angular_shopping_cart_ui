@@ -6,6 +6,8 @@ import { OrderComponent } from './components/order/order.component';
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 import { ProductComponent } from './components/product/product.component';
 import { OrderDetailComponent } from './components/order/order-detail/order-detail.component';
+import { AuthorizationGuard } from './guards/authorization.guard';
+import { FirstShopComponent } from './components/shopping-cart/first-shop/first-shop.component';
 
 const routes: Routes = [
     {
@@ -18,11 +20,18 @@ const routes: Routes = [
     },
     {
         path: 'order',
-        component: OrderComponent
+        component: OrderComponent,
+        canActivate: [AuthorizationGuard]
     },
     {
-        path: 'shopping-cart/:id',
-        component: ShoppingCartComponent
+        path: 'first-shop/:productId',
+        component: FirstShopComponent,
+        canActivate: [AuthorizationGuard]
+    },
+    {
+        path: 'shopping-cart/:buyerId',
+        component: ShoppingCartComponent,
+        canActivate: [AuthorizationGuard]
     },
     {
         path: 'product/:id',
@@ -30,7 +39,8 @@ const routes: Routes = [
     },
     {
         path: 'order-detail/:id',
-        component: OrderDetailComponent
+        component: OrderDetailComponent,
+        canActivate: [AuthorizationGuard]
     },
     {
         path: '**',
@@ -40,4 +50,3 @@ const routes: Routes = [
 ];
 
 export const appRoutes: ModuleWithProviders = RouterModule.forRoot(routes);
-

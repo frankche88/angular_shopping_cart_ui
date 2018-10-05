@@ -4,7 +4,7 @@ import { Observable, fromEvent, merge } from 'rxjs';
 import { Subscription } from 'rxjs';
 import { GenericValidator } from '../../shared/validators/generic-validator';
 import { AuthService } from 'ng2-ui-auth';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { debounceTime } from 'rxjs/operators';
 import { CustomValidators } from 'ng2-validation';
 
@@ -23,9 +23,10 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
     validationMessages: { [key: string]: { [key: string]: string } };
     genericValidator: GenericValidator;
     subscription: Subscription = new Subscription();
+    returnUrl: string;
 
     constructor(private fb: FormBuilder, private _authService: AuthService,
-        private _router: Router) {
+        private _router: Router, private _route: ActivatedRoute) {
 
         this.validationMessages = {
             email: {
@@ -49,6 +50,8 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
             password: new FormControl('P@$$w0rd', [ Validators.required, Validators.minLength(5)])
 
         });
+
+        this.returnUrl = this._route.snapshot.queryParams['returnUrl'] || '/';
     }
 
     ngAfterViewInit(): void {
@@ -73,7 +76,7 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
             error: (err: any) => {
             },
             complete: () => {
-                this._router.navigateByUrl('home');
+                this._router.navigateByUrl(this.returnUrl);
             }
         });
 

@@ -1,25 +1,25 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { ProductService } from '../../services/product.service';
-import { Product } from '../../models/product';
-import { ShoppingCartService } from '../../services/shopping-cart.service';
-import { ShoppingCart } from '../../models/shopping-cart';
 import { AuthService } from 'ng2-ui-auth';
+import { ShoppingCartService } from '../../../services/shopping-cart.service';
+import { ProductService } from '../../../services/product.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Product } from '../../../models/product';
+import { ShoppingCart } from '../../../models/shopping-cart';
 
 @Component({
-  selector: 'app-product',
-  templateUrl: './product.component.html',
-  styleUrls: ['./product.component.css']
+  selector: 'app-first-shop',
+  templateUrl: './first-shop.component.html',
+  styleUrls: ['./first-shop.component.css']
 })
-export class ProductComponent implements OnInit, OnDestroy {
+export class FirstShopComponent implements OnInit, OnDestroy {
 
   subscription: Subscription = new Subscription();
-  product: Product;
+  
   constructor(private _route: ActivatedRoute, private _router: Router,
-               private _productService: ProductService,
-               private _shoppingCartService: ShoppingCartService,
-               private _auth: AuthService) { }
+    private _productService: ProductService,
+    private _shoppingCartService: ShoppingCartService,
+    private _auth: AuthService) { }
 
   ngOnInit() {
 
@@ -27,28 +27,27 @@ export class ProductComponent implements OnInit, OnDestroy {
 
       (params): void => {
 
-        const id: number = Number(params['id']);
+        const id: number = Number(params['productId']);
 
         this.getProduct(id);
       });
 
     this.subscription.add(formSubscription);
-
   }
 
-
+  
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
-
   getProduct(id: number): void {
 
-    if (id === 0) { return; }
+    if (id === 0) { this._router.navigateByUrl(`/`);}
 
       const modelSubscription = this._productService.get(id).subscribe(
       (response: Product) => {
-        this.product = response;
+       
+        this.addToCart(response);
       },
       (error: any) => {
       }
@@ -56,15 +55,11 @@ export class ProductComponent implements OnInit, OnDestroy {
 
     this.subscription.add(modelSubscription);
   }
+  
+  addToCart(product: Product): void {
 
-  addToCart(): void {
-
-    if(!this.isAuthenticated()){
-      this._router.navigateByUrl(`/first-shop/${this.product.id}`);
-      return;
-    } ;
-
-      const modelAddSubscription = this._shoppingCartService.AddItem(this.getBuyerId() , this.product).subscribe(
+    console.log(product);
+    const modelAddSubscription = this._shoppingCartService.AddItem(this.getBuyerId(), product).subscribe(
       (response: ShoppingCart) => {
         this._router.navigateByUrl(`/shopping-cart/${response.id}`);
       },
@@ -81,9 +76,9 @@ export class ProductComponent implements OnInit, OnDestroy {
     return this._auth.isAuthenticated();
   }
 
-  
   getBuyerId(): number {
 
+     console.log(this._auth.getPayload().userId);
     return this._auth.getPayload().userId;
   }
 }
