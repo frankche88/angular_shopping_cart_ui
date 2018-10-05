@@ -6,4 +6,5 @@ export class Product extends BaseEntity {
     description: string;
     price: number;
     pictureUrl: string;
+    currency: string;
 }
