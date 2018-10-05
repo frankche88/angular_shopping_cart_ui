@@ -23,16 +23,7 @@ export class FirstShopComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    const formSubscription = this._route.params.subscribe(
-
-      (params): void => {
-
-        const id: number = Number(params['productId']);
-
-        this.getProduct(id);
-      });
-
-    this.subscription.add(formSubscription);
+    this.populateNewBasket();
   }
 
   
@@ -40,28 +31,54 @@ export class FirstShopComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  getProduct(id: number): void {
+  isAuthenticated(): boolean {
 
-    if (id === 0) { this._router.navigateByUrl(`/`);}
+    return this._auth.isAuthenticated();
+  }
 
-      const modelSubscription = this._productService.get(id).subscribe(
-      (response: Product) => {
-       
-        this.addToCart(response);
+
+  populateNewBasket(): void {
+    const modelclearSubscription = this._shoppingCartService.delete(0).subscribe(
+      (response: any) => {
+        this.getProduct();
       },
       (error: any) => {
       }
     );
 
-    this.subscription.add(modelSubscription);
+    this.subscription.add(modelclearSubscription);
+
+  }
+
+  getProduct(): void {
+
+      this._route.params.subscribe(
+
+        (params): void => {
+
+          const productId: number = Number(params['productId']);
+          
+          if (productId === 0) { this._router.navigateByUrl(`/`);}
+
+          const modelSubscription = this._productService.get(productId).subscribe(
+          (product: Product) => {
+            this.addToCart(product);
+          },
+          (error: any) => {
+          }
+        );
+    
+        this.subscription.add(modelSubscription);
+      
+      });
   }
   
   addToCart(product: Product): void {
 
-    console.log(product);
-    const modelAddSubscription = this._shoppingCartService.AddItem(this.getBuyerId(), product).subscribe(
+    const modelAddSubscription = this._shoppingCartService.AddItem(product).subscribe(
       (response: ShoppingCart) => {
-        this._router.navigateByUrl(`/shopping-cart/${response.id}`);
+
+        this._router.navigateByUrl(`/shopping-cart`);
       },
       (error: any) => {
       }
@@ -71,14 +88,4 @@ export class FirstShopComponent implements OnInit, OnDestroy {
 
   }
 
-  isAuthenticated(): boolean {
-
-    return this._auth.isAuthenticated();
-  }
-
-  getBuyerId(): number {
-
-     console.log(this._auth.getPayload().userId);
-    return this._auth.getPayload().userId;
-  }
 }

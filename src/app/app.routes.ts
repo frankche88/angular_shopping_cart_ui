@@ -29,7 +29,7 @@ const routes: Routes = [
         canActivate: [AuthorizationGuard]
     },
     {
-        path: 'shopping-cart/:buyerId',
+        path: 'shopping-cart',
         component: ShoppingCartComponent,
         canActivate: [AuthorizationGuard]
     },

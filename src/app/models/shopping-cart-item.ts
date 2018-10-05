@@ -1,25 +1,26 @@
 import { BaseEntity } from './base-entity';
 
-export class ShoppingCartItem extends BaseEntity {
+export class ShoppingCartItem {
 
     productId: number;
-    name: string;
+    productName: string;
     pictureUrl: string;
     quantity: number;
-    price: number;
-
-    constructor(_productId: number, _name: string, _pictureUrl: string, _price: number) {
-        super();
-        this.id = _productId;
+    unitPrice: number;
+    currency: string;
+    total: number;
+    
+    constructor(_productId: number, _productName: string,
+                 _pictureUrl: string, _unitPrice: number, _currency: string) {
+    
         this.productId = _productId;
-        this.name = _name;
+        this.productName = _productName;
         this.pictureUrl = _pictureUrl;
-        this.price = _price;
+        this.unitPrice = _unitPrice;
+        this.currency = _currency;
         this.quantity = 1;
     }
 
-    getTotal(): number {
 
-        return this.quantity * this.price;
-    }
+
 }

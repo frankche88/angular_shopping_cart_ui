@@ -1,60 +1,60 @@
 import { Injectable } from '@angular/core';
-import { BaseResourceMockService } from './base-resource-mock.service';
 import { ShoppingCart } from '../models/shopping-cart';
 import { Product } from '../models/product';
 import { Observable, of } from 'rxjs';
 import { ShoppingCartItem } from '../models/shopping-cart-item';
+import { BaseResourceService } from './base-resource.service';
+import { HttpClient } from '@angular/common/http';
+import { flatMap } from 'rxjs/operators';
 
 @Injectable()
-export class ShoppingCartService extends BaseResourceMockService<ShoppingCart> {
+export class ShoppingCartService extends BaseResourceService<ShoppingCart> {
 
-    shoppingCart: ShoppingCart;
-    constructor() {
-        super([]);
+    constructor(http: HttpClient) {
+       
+        super(http, 'carts');
     }
 
-    AddItem(buyerId: number, product: Product): Observable<ShoppingCart> {
+    AddItem(product: Product): Observable<ShoppingCart> {
 
-        if (this.shoppingCart == null) {
+             return  this.getShoppingCart().pipe(
+                    flatMap(
+                            shoppingCart => {
+                                const item = shoppingCart.items.find(o => o.productId == product.id);
+                                if (item === undefined) {
+                                    shoppingCart.items.push(new ShoppingCartItem(product.id, product.name,
+                                        product.pictureUrl, product.price, product.currency));
+                                } else {
+                                    const index = shoppingCart.items.indexOf(item);
+                                    item.quantity++;
+                                    shoppingCart.items[index] = item;
+                                }
+                                return this.save(shoppingCart, 0);
+                            }
+                    )
+                );
+    }
 
-            this.shoppingCart = new ShoppingCart();
-            this.shoppingCart.id = buyerId;
-            this.shoppingCart.buyerId = buyerId;
-            this.shoppingCart.items = [];
-            this.shoppingCart.items.push( new ShoppingCartItem(product.id, product.name,product.pictureUrl, product.price));
+    getShoppingCart(): Observable<ShoppingCart> {
 
-        } else {
-
-            const item = this.shoppingCart.items.find(o => o.id === product.id);
-
-            if (item === undefined) {
-                this.shoppingCart.items.push(
-                    new ShoppingCartItem(product.id, product.name,
-                        product.pictureUrl, product.price));
-            } else {
-                const index = this.shoppingCart.items.indexOf(item);
-                item.quantity++;
-                this.shoppingCart.items[index] = item;
-            }
-
-        }
-
-        return this.save(this.shoppingCart, 0);
+        return this.get(0);
 
     }
 
-    getByBuyerId(buyerId: number): Observable<ShoppingCart> {
+    deleteShoppingCart(): Observable<any> {
 
-        return this.get(buyerId);
+        return this.delete(0);
 
     }
 
-    deleteItem(buyerId: number, itemId: number): Observable<ShoppingCartItem[]> {
+    deleteItem(itemId: number): Observable<ShoppingCartItem[]> {
 
-        const item = this.shoppingCart.items.find(o => o.id === itemId);
+        let shoppingCart = new ShoppingCart();
+      /*   const item = this.shoppingCart.items.find(o => o.id === it
+        emId);
         const index = this.shoppingCart.items.indexOf(item);
-        this.shoppingCart.items.splice(index, 1);
-        return of(this.shoppingCart.items);
+        this.shoppingCart.items.splice(index, 1); */
+        return of(shoppingCart.items);
 
     }
 }

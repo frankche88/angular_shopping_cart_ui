@@ -64,9 +64,9 @@ export class ProductComponent implements OnInit, OnDestroy {
       return;
     } ;
 
-      const modelAddSubscription = this._shoppingCartService.AddItem(this.getBuyerId() , this.product).subscribe(
+      const modelAddSubscription = this._shoppingCartService.AddItem(this.product).subscribe(
       (response: ShoppingCart) => {
-        this._router.navigateByUrl(`/shopping-cart/${response.id}`);
+        this._router.navigateByUrl(`/shopping-cart`);
       },
       (error: any) => {
       }
@@ -79,11 +79,5 @@ export class ProductComponent implements OnInit, OnDestroy {
   isAuthenticated(): boolean {
 
     return this._auth.isAuthenticated();
-  }
-
-  
-  getBuyerId(): number {
-
-    return this._auth.getPayload().userId;
   }
 }

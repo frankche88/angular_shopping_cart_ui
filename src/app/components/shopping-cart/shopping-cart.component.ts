@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ShoppingCartItem } from '../../models/shopping-cart-item';
 import { ShoppingCartService } from '../../services/shopping-cart.service';
 import { ShoppingCart } from '../../models/shopping-cart';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -14,37 +13,26 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
 
   subscription: Subscription = new Subscription();
   shoppingCartList: ShoppingCartItem[];
-  currentBuyerId = 1;
-
-  constructor(private _shoppingCartService: ShoppingCartService,
-    private _route: ActivatedRoute, private _router: Router) {
+  total: number;
+  constructor(private _shoppingCartService: ShoppingCartService) {
 
   }
 
   ngOnInit() {
 
-    const formSubscription = this._route.params.subscribe(
-
-      (params): void => {
-
-        const id: number = Number(params['buyerId']);
-
-        this.getShoppingCart(id);
-      });
-
-    this.subscription.add(formSubscription);
+        this.getShoppingCart();
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
-  getShoppingCart(id: number) {
+  getShoppingCart() {
 
-    const getSubscription =  this._shoppingCartService.getByBuyerId(id).subscribe(
+    const getSubscription =  this._shoppingCartService.getShoppingCart().subscribe(
 
       (response: ShoppingCart) => {
-
+        this.total = response.total;
         this.shoppingCartList = response.items;
       },
       (error: any) => {
@@ -54,9 +42,9 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
       this.subscription.add(getSubscription);
   }
 
-  deleteItem(id: number) {
+  deleteItem(productId: number) {
 
-    const deleteSubscription =  this._shoppingCartService.deleteItem(this.currentBuyerId, id).subscribe(
+    const deleteSubscription =  this._shoppingCartService.deleteItem(productId).subscribe(
 
       (response: ShoppingCartItem[]) => {
 
@@ -67,15 +55,5 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
       });
 
       this.subscription.add(deleteSubscription);
-  }
-
-  getTotal(): number {
-
-    let sum = 0;
-    for (let i = 0; i < this.shoppingCartList.length; i++) {
-      sum = sum + this.shoppingCartList[i].getTotal();
-    }
-    return sum;
-
   }
 }

@@ -25,16 +25,16 @@
                   <img [src]="shoppingCartItem.pictureUrl">
 
                 </td>
-                <td>{{shoppingCartItem.name}}
+                <td>{{shoppingCartItem.productName}}
                 </td>
                 <td>
                   {{shoppingCartItem.quantity}}
                 </td>
-                <td>{{shoppingCartItem.price | currency}}</td>
-                <td>{{shoppingCartItem.getTotal() | currency}}</td>
+                <td>{{shoppingCartItem.unitPrice | currency: shoppingCartItem.currency }}</td>
+                <td>{{shoppingCartItem.total | currency: shoppingCartItem.currency}}</td>
                 <td>
                   
-                    <a (click)="deleteItem(shoppingCartItem.id)">
+                    <a (click)="deleteItem(shoppingCartItem.productId)">
                         <i class="fa fa-trash-o"></i>
                     </a>
 
@@ -45,7 +45,7 @@
             <tfoot>
               <tr>
                 <th colspan="5">Total</th>
-                <th colspan="2">{{getTotal()| currency}}</th>
+                <th colspan="2">{{total | currency: shoppingCartList[0].currency}}</th>
               </tr>
             </tfoot>
           </table>
