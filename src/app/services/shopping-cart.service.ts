@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ShoppingCart } from '../models/shopping-cart';
 import { Product } from '../models/product';
-import { Observable, of } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { ShoppingCartItem } from '../models/shopping-cart-item';
 import { BaseResourceService } from './base-resource.service';
 import { HttpClient } from '@angular/common/http';
@@ -11,6 +11,8 @@ import { MessageAlertHandleService } from '../shared/services/message-alert.serv
 @Injectable()
 export class ShoppingCartService extends BaseResourceService<ShoppingCart> {
 
+    private subject = new Subject<any>();
+    
     constructor(private http: HttpClient, private messageAlertHandleService : MessageAlertHandleService) {
         super(http, 'carts', messageAlertHandleService);
     }
@@ -54,5 +56,13 @@ export class ShoppingCartService extends BaseResourceService<ShoppingCart> {
                 ), finalize(() => {
                    this.blockUI.stop();
                }));
+    }
+
+    public setNumberItems(numberItem: number) {
+        this.subject.next({ value: numberItem });
+    }
+
+    public getNumberItems(): any {
+        return this.subject.asObservable();
     }
 }

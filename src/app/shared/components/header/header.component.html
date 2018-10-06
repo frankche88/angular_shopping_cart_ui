@@ -40,6 +40,14 @@
                 </li>
             </ul>
         </div>
+        <div class="navbar-buttons">
+
+            <div class="navbar-collapse collapse right" id="basket-overview">
+                <a [routerLink]="['shopping-cart']" 
+                class="btn btn-primary navbar-btn"><i class="fa fa-shopping-cart"></i><span class="hidden-sm">{{totalItems}} items in cart</span></a>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
     </div>
     <!-- /.container -->
 </div>

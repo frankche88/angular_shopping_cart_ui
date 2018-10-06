@@ -37,6 +37,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
       (response: ShoppingCart) => {
         this.total = response.total;
         this.shoppingCartList = response.items;
+        this._shoppingCartService.setNumberItems(this.shoppingCartList.length);
         this.blockUI.stop();
       },
       (error: any) => {
@@ -54,6 +55,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
       (response: ShoppingCartItem[]) => {
 
         this.shoppingCartList = response;
+        this._shoppingCartService.setNumberItems(this.shoppingCartList.length);
         this.blockUI.stop();
       },
       (error: any) => {
