@@ -74,7 +74,6 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     signUp(): void {
-
         this.blockUI.start();
         const authLoginSubscription = this._authService.login(JSON.stringify(this.mainForm.value)).subscribe({
             error: (err: any) => {
@@ -93,14 +92,14 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
 
     
   clearBasket(): void {
-    this.blockUI.start();
+
     const modelclearSubscription = this._shoppingCartService.deleteShoppingCart().subscribe(
       (response: any) => {
-        this.blockUI.stop();
+
         this._router.navigateByUrl(this.returnUrl);
       },
       (error: any) => {
-        this.blockUI.stop();
+
       }
     );
 

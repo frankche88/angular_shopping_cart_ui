@@ -24,6 +24,8 @@ import { ShoppingCartService } from './services/shopping-cart.service';
 import { AuthorizationGuard } from './guards/authorization.guard';
 import { FirstShopComponent } from './components/shopping-cart/first-shop/first-shop.component';
 import { BlockUIModule } from 'ng-block-ui';
+import { ToastrModule } from 'ngx-toastr';
+import { MessageAlertHandleService } from './shared/services/message-alert.service';
 
 @NgModule({
   declarations: [
@@ -48,13 +50,14 @@ import { BlockUIModule } from 'ng-block-ui';
     HttpClientModule,
     appRoutes,
     Ng2UiAuthModule.forRoot(AuthConfig),
+    ToastrModule.forRoot(),
     BlockUIModule.forRoot(
       {
         message: 'Please wait...'
       }
     )
   ],
-  providers: [AuthorizationGuard,JsonInterceptorService, ProductService,
+  providers: [ MessageAlertHandleService, AuthorizationGuard, JsonInterceptorService, ProductService,
     ShoppingCartService,
     {
       provide: HTTP_INTERCEPTORS,
