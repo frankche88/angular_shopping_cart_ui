@@ -12,22 +12,22 @@ import { MessageAlertHandleService } from '../shared/services/message-alert.serv
 export class ShoppingCartService extends BaseResourceService<ShoppingCart> {
 
     private subject = new Subject<any>();
-    
-    constructor(private http: HttpClient, private messageAlertHandleService : MessageAlertHandleService) {
+
+    constructor(private http: HttpClient, private messageAlertHandleService: MessageAlertHandleService) {
         super(http, 'carts', messageAlertHandleService);
     }
 
     AddItem(product: Product): Observable<ShoppingCart> {
-        
+
         const url = `${this.baseUrl}`;
         return this.http
             .post<ShoppingCart>(url, new ShoppingCartItem(product.id, product.name,
                 product.pictureUrl, product.price, product.currency)).pipe(
-            catchError((error: any) => {
-                this.messageAlertHandleService.handleError(error);
-                return  Observable.throw(error || 'Server error');
-             }));
- 
+                    catchError((error: any) => {
+                        this.messageAlertHandleService.handleError(error);
+                        return Observable.throw(error || 'Server error');
+                    }));
+
     }
 
     getShoppingCart(): Observable<ShoppingCart> {
@@ -47,15 +47,14 @@ export class ShoppingCartService extends BaseResourceService<ShoppingCart> {
         const url = `${this.baseUrl}/product/${productId}`;
         return this.http
             .delete<ShoppingCartItem[]>(url).pipe(
-                catchError((response: any) =>
-                {
-                   this.messageAlertHandleService.handleError(response.error);
-                   this.blockUI.stop();
-                 return  Observable.throw(response.error || 'Server error');
+                catchError((response: any) => {
+                    this.messageAlertHandleService.handleError(response.error);
+                    this.blockUI.stop();
+                    return Observable.throw(response.error || 'Server error');
                 }
                 ), finalize(() => {
-                   this.blockUI.stop();
-               }));
+                    this.blockUI.stop();
+                }));
     }
 
     public setNumberItems(numberItem: number) {

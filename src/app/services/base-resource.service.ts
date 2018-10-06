@@ -9,7 +9,7 @@ export abstract class BaseResourceService<T> {
     @BlockUI() blockUI: NgBlockUI;
     public baseUrl = '';
 
-    constructor(private _http: HttpClient, _url: string,private _messageAlertHandleService : MessageAlertHandleService) {
+    constructor(private _http: HttpClient, _url: string, private _messageAlertHandleService: MessageAlertHandleService) {
 
         this.baseUrl = environment.apiUrl + _url;
 
@@ -18,15 +18,14 @@ export abstract class BaseResourceService<T> {
     public getAll(): Observable<T[]> {
         this.blockUI.start();
         return this._http.get<T[]>(`${this.baseUrl}`).pipe(
-         catchError((response: any) =>
-         {
-            this._messageAlertHandleService.handleError(response.error);
-            this.blockUI.stop();
-          return  Observable.throw(response.error || 'Server error');
-         }
-         ), finalize(() => {
-            this.blockUI.stop();
-        }));
+            catchError((response: any) => {
+                this._messageAlertHandleService.handleError(response.error);
+                this.blockUI.stop();
+                return Observable.throw(response.error || 'Server error');
+            }
+            ), finalize(() => {
+                this.blockUI.stop();
+            }));
     }
 
     public get(id: number): Observable<T> {
@@ -36,8 +35,8 @@ export abstract class BaseResourceService<T> {
             .pipe(catchError((response: any) => {
                 this._messageAlertHandleService.handleError(response.error);
                 this.blockUI.stop();
-              return  Observable.throw(response.error || 'Server error');
-             }), finalize(() => {
+                return Observable.throw(response.error || 'Server error');
+            }), finalize(() => {
                 this.blockUI.stop();
             }));
     }
@@ -48,8 +47,8 @@ export abstract class BaseResourceService<T> {
             catchError((response: any) => {
                 this._messageAlertHandleService.handleError(response.error);
                 this.blockUI.stop();
-              return  Observable.throw(response.error || 'Server error');
-             }), finalize(() => {
+                return Observable.throw(response.error || 'Server error');
+            }), finalize(() => {
                 this.blockUI.stop();
             }));
     }
@@ -62,8 +61,8 @@ export abstract class BaseResourceService<T> {
                 catchError((response: any) => {
                     this._messageAlertHandleService.handleError(response.error);
                     this.blockUI.stop();
-                  return  Observable.throw(response.error || 'Server error');
-                 }), finalize(() => {
+                    return Observable.throw(response.error || 'Server error');
+                }), finalize(() => {
                     this.blockUI.stop();
                 }));
     }
@@ -76,8 +75,8 @@ export abstract class BaseResourceService<T> {
                 catchError((response: any) => {
                     this._messageAlertHandleService.handleError(response.error);
                     this.blockUI.stop();
-                  return  Observable.throw(response.error || 'Server error');
-                 }), finalize(() => {
+                    return Observable.throw(response.error || 'Server error');
+                }), finalize(() => {
                     this.blockUI.stop();
                 }));
     }

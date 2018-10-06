@@ -15,13 +15,13 @@ import { BlockUI, NgBlockUI } from 'ng-block-ui';
 })
 export class ProductComponent implements OnInit, OnDestroy {
   @BlockUI() blockUI: NgBlockUI;
-  
+
   subscription: Subscription = new Subscription();
   product: Product;
   constructor(private _route: ActivatedRoute, private _router: Router,
-               private _productService: ProductService,
-               private _shoppingCartService: ShoppingCartService,
-               private _auth: AuthService) { }
+    private _productService: ProductService,
+    private _shoppingCartService: ShoppingCartService,
+    private _auth: AuthService) { }
 
   ngOnInit() {
 
@@ -48,8 +48,8 @@ export class ProductComponent implements OnInit, OnDestroy {
 
     if (id === 0) { return; }
 
-      this.blockUI.start();
-      const modelSubscription = this._productService.get(id).subscribe(
+    this.blockUI.start();
+    const modelSubscription = this._productService.get(id).subscribe(
       (response: Product) => {
         this.blockUI.stop();
         this.product = response;
@@ -57,7 +57,7 @@ export class ProductComponent implements OnInit, OnDestroy {
       (error: any) => {
         this.blockUI.stop();
       }
-      
+
     );
 
     this.subscription.add(modelSubscription);
@@ -70,8 +70,8 @@ export class ProductComponent implements OnInit, OnDestroy {
       return;
     }
 
-     this.blockUI.start();
-      const modelAddSubscription = this._shoppingCartService.AddItem(this.product).subscribe(
+    this.blockUI.start();
+    const modelAddSubscription = this._shoppingCartService.AddItem(this.product).subscribe(
       (response: ShoppingCart) => {
         this.blockUI.stop();
         this._router.navigateByUrl(`/shopping-cart`);

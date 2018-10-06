@@ -23,13 +23,13 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
 
   }
 
-  ngAfterViewInit(): void { 
+  ngAfterViewInit(): void {
 
-        const numberItemsSubscription = this._shoppingCartService.getNumberItems()
-        .subscribe(numberItem => {
-            this.totalItems = numberItem.value;
-            this._changeDetectorRef.detectChanges();
-        });
+    const numberItemsSubscription = this._shoppingCartService.getNumberItems()
+      .subscribe(numberItem => {
+        this.totalItems = numberItem.value;
+        this._changeDetectorRef.detectChanges();
+      });
 
     this.subscription.add(numberItemsSubscription);
 
@@ -63,6 +63,6 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   getUserName(): boolean {
 
     return (this._authService.getPayload() !== undefined) ?
-          this.userName = this._authService.getPayload().sub : '';
+      this.userName = this._authService.getPayload().sub : '';
   }
 }

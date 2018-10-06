@@ -8,18 +8,18 @@ import { Product } from '../../models/product';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
- 
-  
-  constructor( private _productService: ProductService) { }
+
+
+  constructor(private _productService: ProductService) { }
   products: Product[];
 
   ngOnInit() {
 
-   
-      this._productService.getAll().subscribe(
+
+    this._productService.getAll().subscribe(
       (response: any) => {
-         this.products = response;
-       
+        this.products = response;
+
       },
       (error: any) => {
       });

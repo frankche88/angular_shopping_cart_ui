@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core';
-import {ToastrService} from 'ngx-toastr';
+import { Injectable } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class MessageAlertHandleService {
-    constructor(private toastr: ToastrService) {}
+    constructor(private toastr: ToastrService) { }
 
     handleError(err: any) {
 
@@ -11,7 +11,7 @@ export class MessageAlertHandleService {
 
         if (typeof err === 'string') {
 
-            errorMessage = err ;
+            errorMessage = err;
 
         } else if (err instanceof Object) {
 

@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
     constructor(private fb: FormBuilder, private _authService: AuthService,
         private _router: Router, private _route: ActivatedRoute,
         private _shoppingCartService: ShoppingCartService,
-        private _messageAlertHandleService : MessageAlertHandleService) {
+        private _messageAlertHandleService: MessageAlertHandleService) {
 
         this.validationMessages = {
             email: {
@@ -52,8 +52,8 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
     ngOnInit(): void {
 
         this.mainForm = this.fb.group({
-            email: new FormControl('member@test.com', [ Validators.required, Validators.minLength(5), CustomValidators.email]),
-            password: new FormControl('P@$$w0rd', [ Validators.required, Validators.minLength(5)])
+            email: new FormControl('member@test.com', [Validators.required, Validators.minLength(5), CustomValidators.email]),
+            password: new FormControl('P@$$w0rd', [Validators.required, Validators.minLength(5)])
 
         });
 
@@ -86,7 +86,7 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
             complete: () => {
                 this.blockUI.stop();
                 this.clearBasket();
-               
+
             }
         });
 
@@ -94,20 +94,20 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
 
     }
 
-    
-  clearBasket(): void {
 
-    const modelclearSubscription = this._shoppingCartService.deleteShoppingCart().subscribe(
-      (response: any) => {
+    clearBasket(): void {
 
-        this._router.navigateByUrl(this.returnUrl);
-      },
-      (error: any) => {
+        const modelclearSubscription = this._shoppingCartService.deleteShoppingCart().subscribe(
+            (response: any) => {
 
-      }
-    );
+                this._router.navigateByUrl(this.returnUrl);
+            },
+            (error: any) => {
 
-    this.subscription.add(modelclearSubscription);
+            }
+        );
 
-  }
+        this.subscription.add(modelclearSubscription);
+
+    }
 }

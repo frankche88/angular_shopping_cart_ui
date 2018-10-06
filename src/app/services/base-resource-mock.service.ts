@@ -3,7 +3,7 @@ import { BaseEntity } from '../models/base-entity';
 
 export abstract class BaseResourceMockService<T extends BaseEntity> {
 
-    constructor( private collection: T[] = []) {
+    constructor(private collection: T[] = []) {
 
     }
 
@@ -20,7 +20,7 @@ export abstract class BaseResourceMockService<T extends BaseEntity> {
 
     private insert(entity: T): Observable<T> {
 
-        if (entity.id === 0) {  entity.id = this.collection.length + 1; }
+        if (entity.id === 0) { entity.id = this.collection.length + 1; }
 
         this.collection.push(entity);
         return of(entity);
