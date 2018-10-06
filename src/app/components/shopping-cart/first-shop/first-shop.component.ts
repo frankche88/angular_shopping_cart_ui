@@ -23,7 +23,8 @@ export class FirstShopComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.populateNewBasket();
+    this.getProduct();
+
   }
 
   
@@ -36,19 +37,6 @@ export class FirstShopComponent implements OnInit, OnDestroy {
     return this._auth.isAuthenticated();
   }
 
-
-  populateNewBasket(): void {
-    const modelclearSubscription = this._shoppingCartService.delete(0).subscribe(
-      (response: any) => {
-        this.getProduct();
-      },
-      (error: any) => {
-      }
-    );
-
-    this.subscription.add(modelclearSubscription);
-
-  }
 
   getProduct(): void {
 

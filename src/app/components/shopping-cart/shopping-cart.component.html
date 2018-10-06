@@ -1,4 +1,10 @@
-<div class="container" *ngIf="shoppingCartList">
+<div class="container" *ngIf="shoppingCartList && shoppingCartList.length == 0">
+  <div class="col-md-12" id="basket">
+    <div class="box"> The basket is empty.</div>
+  </div>
+</div>
+
+<div class="container" *ngIf="shoppingCartList && shoppingCartList.length > 0">
 
   <div class="col-md-12" id="basket">
 
@@ -33,12 +39,12 @@
                 <td>{{shoppingCartItem.unitPrice | currency: shoppingCartItem.currency }}</td>
                 <td>{{shoppingCartItem.total | currency: shoppingCartItem.currency}}</td>
                 <td>
-                  
-                    <a (click)="deleteItem(shoppingCartItem.productId)">
-                        <i class="fa fa-trash-o"></i>
-                    </a>
 
-               
+                  <a (click)="deleteItem(shoppingCartItem.productId)">
+                    <i class="fa fa-trash-o"></i>
+                  </a>
+
+
                 </td>
               </tr>
             </tbody>

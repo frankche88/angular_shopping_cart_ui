@@ -5,33 +5,23 @@ import { Observable, of } from 'rxjs';
 import { ShoppingCartItem } from '../models/shopping-cart-item';
 import { BaseResourceService } from './base-resource.service';
 import { HttpClient } from '@angular/common/http';
-import { flatMap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class ShoppingCartService extends BaseResourceService<ShoppingCart> {
 
-    constructor(http: HttpClient) {
+    constructor(private http: HttpClient) {
         super(http, 'carts');
     }
 
     AddItem(product: Product): Observable<ShoppingCart> {
-
-             return  this.getShoppingCart().pipe(
-                    flatMap(
-                            shoppingCart => {
-                                const item = shoppingCart.items.find(o => o.productId === product.id);
-                                if (item === undefined) {
-                                    shoppingCart.items.push(new ShoppingCartItem(product.id, product.name,
-                                        product.pictureUrl, product.price, product.currency));
-                                } else {
-                                    const index = shoppingCart.items.indexOf(item);
-                                    item.quantity++;
-                                    shoppingCart.items[index] = item;
-                                }
-                                return this.save(shoppingCart, 0);
-                            }
-                    )
-                );
+        
+        const url = `${this.baseUrl}`;
+        return this.http
+            .post<ShoppingCart>(url, new ShoppingCartItem(product.id, product.name,
+                product.pictureUrl, product.price, product.currency)).pipe(
+            catchError((error: any) => Observable.throw(error || 'Server error')));
+ 
     }
 
     getShoppingCart(): Observable<ShoppingCart> {

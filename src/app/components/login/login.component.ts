@@ -7,6 +7,7 @@ import { AuthService } from 'ng2-ui-auth';
 import { Router, ActivatedRoute } from '@angular/router';
 import { debounceTime } from 'rxjs/operators';
 import { CustomValidators } from 'ng2-validation';
+import { ShoppingCartService } from '../../services/shopping-cart.service';
 
 @Component({
     selector: 'app-login',
@@ -26,7 +27,7 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
     returnUrl: string;
 
     constructor(private fb: FormBuilder, private _authService: AuthService,
-        private _router: Router, private _route: ActivatedRoute) {
+        private _router: Router, private _route: ActivatedRoute, private _shoppingCartService: ShoppingCartService) {
 
         this.validationMessages = {
             email: {
@@ -76,11 +77,26 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
             error: (err: any) => {
             },
             complete: () => {
-                this._router.navigateByUrl(this.returnUrl);
+                this.clearBasket();
+               
             }
         });
 
         this.subscription.add(authLoginSubscription);
 
     }
+
+    
+  clearBasket(): void {
+    const modelclearSubscription = this._shoppingCartService.deleteShoppingCart().subscribe(
+      (response: any) => {
+        this._router.navigateByUrl(this.returnUrl);
+      },
+      (error: any) => {
+      }
+    );
+
+    this.subscription.add(modelclearSubscription);
+
+  }
 }

@@ -20,7 +20,4 @@ export class ShoppingCartItem {
         this.currency = _currency;
         this.quantity = 1;
     }
-
-
-
 }
