@@ -21,7 +21,7 @@ export abstract class BaseResourceService<T> {
 
     public get(id: number): Observable<T> {
 
-        const url = id == 0 ? `${this.baseUrl}` : `${this.baseUrl}/${id}`;
+        const url = id === 0 ? `${this.baseUrl}` : `${this.baseUrl}/${id}`;
         return this._http.get<T>(url)
             .pipe(catchError((error: any) => Observable.throw(error || 'Server error')));
     }
@@ -42,7 +42,7 @@ export abstract class BaseResourceService<T> {
 
     delete(id: number): Observable<any> {
 
-        const url = id == 0 ? `${this.baseUrl}` : `${this.baseUrl}/${id}`;
+        const url = id === 0 ? `${this.baseUrl}` : `${this.baseUrl}/${id}`;
         return this._http
             .delete<any>(url).pipe(
             catchError((error: any) => Observable.throw(error || 'Server error')));

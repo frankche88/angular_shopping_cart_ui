@@ -59,10 +59,10 @@ export class ProductComponent implements OnInit, OnDestroy {
 
   addToCart(): void {
 
-    if(!this.isAuthenticated()){
+    if (!this.isAuthenticated()) {
       this._router.navigateByUrl(`/first-shop/${this.product.id}`);
       return;
-    } ;
+    }
 
       const modelAddSubscription = this._shoppingCartService.AddItem(this.product).subscribe(
       (response: ShoppingCart) => {

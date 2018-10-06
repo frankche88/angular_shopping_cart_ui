@@ -11,7 +11,6 @@ import { flatMap } from 'rxjs/operators';
 export class ShoppingCartService extends BaseResourceService<ShoppingCart> {
 
     constructor(http: HttpClient) {
-       
         super(http, 'carts');
     }
 
@@ -20,7 +19,7 @@ export class ShoppingCartService extends BaseResourceService<ShoppingCart> {
              return  this.getShoppingCart().pipe(
                     flatMap(
                             shoppingCart => {
-                                const item = shoppingCart.items.find(o => o.productId == product.id);
+                                const item = shoppingCart.items.find(o => o.productId === product.id);
                                 if (item === undefined) {
                                     shoppingCart.items.push(new ShoppingCartItem(product.id, product.name,
                                         product.pictureUrl, product.price, product.currency));
