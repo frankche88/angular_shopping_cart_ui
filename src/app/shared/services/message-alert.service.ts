@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {ToastrService} from 'ngx-toastr';
-import {Response} from '@angular/http';
 
 @Injectable()
 export class MessageAlertHandleService {
@@ -14,24 +13,9 @@ export class MessageAlertHandleService {
 
             errorMessage = err ;
 
-        } else if (err instanceof Response) {
+        } else if (err instanceof Object) {
 
-            const res: Response = err;
-
-            if (res.text() && res.text() !== res.statusText) {
-
-                const errorArray: any[] = JSON.parse(res.text());
-
-                if (errorArray != undefined && errorArray['errors'] != undefined && errorArray['errors'].length > 0) {
-
-                    errorMessage = errorArray['errors'].join('\n');
-                }
-
-                if (errorArray != undefined && errorArray['message'] != undefined && errorArray['message'].length > 0) {
-
-                    errorMessage = errorArray['message'];
-                }
-            }
+            errorMessage = err.message;
         }
 
         this.toastr.error(errorMessage);

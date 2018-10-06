@@ -45,11 +45,11 @@ export class ShoppingCartService extends BaseResourceService<ShoppingCart> {
         const url = `${this.baseUrl}/product/${productId}`;
         return this.http
             .delete<ShoppingCartItem[]>(url).pipe(
-                catchError((error: any) =>
+                catchError((response: any) =>
                 {
-                   this.messageAlertHandleService.handleError(error);
+                   this.messageAlertHandleService.handleError(response.error);
                    this.blockUI.stop();
-                 return  Observable.throw(error || 'Server error');
+                 return  Observable.throw(response.error || 'Server error');
                 }
                 ), finalize(() => {
                    this.blockUI.stop();

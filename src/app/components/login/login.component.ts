@@ -9,6 +9,7 @@ import { debounceTime } from 'rxjs/operators';
 import { CustomValidators } from 'ng2-validation';
 import { ShoppingCartService } from '../../services/shopping-cart.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { MessageAlertHandleService } from '../../shared/services/message-alert.service';
 
 @Component({
     selector: 'app-login',
@@ -29,7 +30,9 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
     returnUrl: string;
 
     constructor(private fb: FormBuilder, private _authService: AuthService,
-        private _router: Router, private _route: ActivatedRoute, private _shoppingCartService: ShoppingCartService) {
+        private _router: Router, private _route: ActivatedRoute,
+        private _shoppingCartService: ShoppingCartService,
+        private _messageAlertHandleService : MessageAlertHandleService) {
 
         this.validationMessages = {
             email: {
@@ -76,8 +79,9 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
     signUp(): void {
         this.blockUI.start();
         const authLoginSubscription = this._authService.login(JSON.stringify(this.mainForm.value)).subscribe({
-            error: (err: any) => {
+            error: (response: any) => {
                 this.blockUI.stop();
+                this._messageAlertHandleService.handleError(response.error);
             },
             complete: () => {
                 this.blockUI.stop();
