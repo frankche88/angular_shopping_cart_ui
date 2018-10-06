@@ -53,7 +53,7 @@ export class FirstShopComponent implements OnInit, OnDestroy {
           
           if (productId === 0) { this._router.navigateByUrl(`/`);}
           
-          this.blockUI.start();
+          this.blockUI.start('getting the product ..');
           const modelSubscription = this._productService.get(productId).subscribe(
           (product: Product) => {
             this.blockUI.stop();
@@ -71,7 +71,7 @@ export class FirstShopComponent implements OnInit, OnDestroy {
   
   addToCart(product: Product): void {
 
-    this.blockUI.start();
+    this.blockUI.start('Adding the product to your basket..');
     const modelAddSubscription = this._shoppingCartService.AddItem(product).subscribe(
       (response: ShoppingCart) => {
         this.blockUI.stop();
