@@ -6,8 +6,10 @@ import { ShoppingCartService } from '../../services/shopping-cart.service';
 import { MessageAlertHandleService } from '../../shared/services/message-alert.service';
 import { CustomValidators } from 'ng2-validation';
 import { debounceTime } from 'rxjs/operators';
-import { ShoppingCartItem } from '../../models/shopping-cart-item';
 import { ShoppingCart } from '../../models/shopping-cart';
+import { Order } from '../../models/order';
+import { OrderItem } from '../../models/order-item';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-check-out',
@@ -23,12 +25,13 @@ export class CheckOutComponent implements OnInit {
   validationMessages: { [key: string]: { [key: string]: string } };
   genericValidator: GenericValidator;
   subscription: Subscription = new Subscription();
-  shoppingCartList: ShoppingCartItem[];
   total: number;
+  order: Order;
 
   constructor(private fb: FormBuilder,
     private _shoppingCartService: ShoppingCartService,
-    private _messageAlertHandleService: MessageAlertHandleService) {
+    private _messageAlertHandleService: MessageAlertHandleService,
+    private _router: Router) {
 
     this.validationMessages = {
       firstName: {
@@ -60,9 +63,13 @@ export class CheckOutComponent implements OnInit {
 
   ngOnInit() {
 
+    this.order = new Order();
+    this.order.orderItems = [];
+
     this.setUpFormControls();
 
     this.getShoppingCart();
+
 
   }
 
@@ -98,9 +105,14 @@ export class CheckOutComponent implements OnInit {
     const getSubscription = this._shoppingCartService.getShoppingCart().subscribe(
 
       (response: ShoppingCart) => {
+
         this.total = response.total;
-        this.shoppingCartList = response.items;
-        this._shoppingCartService.setNumberItems(this.shoppingCartList.length);
+
+        this.order.orderItems = response.items.map(o => {
+          return  new OrderItem (o.productId, o.productName,  o.pictureUrl,
+                                 o.unit, o.unitPrice , o.currency, o. total);});
+    
+        this._shoppingCartService.setNumberItems(this.order.orderItems.length);
       },
       (error: any) => {
       });
@@ -108,4 +120,13 @@ export class CheckOutComponent implements OnInit {
     this.subscription.add(getSubscription);
   }
 
+  save(){
+    if (this.mainForm.valid) {
+
+      const model = Object.assign({}, this.order, this.mainForm.value);
+
+      this._messageAlertHandleService.handleSuccess('order was completed succesfully');
+      this._router.navigateByUrl(`/`);
+    }
+  }
 }
