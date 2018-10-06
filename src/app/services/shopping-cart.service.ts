@@ -36,14 +36,11 @@ export class ShoppingCartService extends BaseResourceService<ShoppingCart> {
 
     }
 
-    deleteItem(itemId: number): Observable<ShoppingCartItem[]> {
+    deleteItem(productId: number): Observable<ShoppingCartItem[]> {
 
-        let shoppingCart = new ShoppingCart();
-      /*   const item = this.shoppingCart.items.find(o => o.id === it
-        emId);
-        const index = this.shoppingCart.items.indexOf(item);
-        this.shoppingCart.items.splice(index, 1); */
-        return of(shoppingCart.items);
-
+        const url = `${this.baseUrl}/product/${productId}`;
+        return this.http
+            .delete<ShoppingCartItem[]>(url).pipe(
+            catchError((error: any) => Observable.throw(error || 'Server error')));
     }
 }
