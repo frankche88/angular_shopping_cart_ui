@@ -13,62 +13,57 @@
 
     <div class="box">
 
-      <form method="post" action="checkout1.html">
+      <h1>Shopping cart</h1>
+      <p class="text-muted">You currency have {{shoppingCartList.length}} item(s) in your cart.</p>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th colspan="2">Product</th>
+              <th>Unit</th>
+              <th>Unit price</th>
+              <th colspan="2">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let shoppingCartItem of shoppingCartList">
+              <td>
+                <img [src]="shoppingCartItem.pictureUrl">
+              </td>
+              <td>{{shoppingCartItem.productName}}
+              </td>
+              <td>
+                {{shoppingCartItem.unit}}
+              </td>
+              <td>{{shoppingCartItem.unitPrice | currency: shoppingCartItem.currency }}</td>
+              <td>{{shoppingCartItem.total | currency: shoppingCartItem.currency}}</td>
+              <td>
+                <a (click)="deleteItem(shoppingCartItem.productId)">
+                  <i class="fa fa-trash-o"></i>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th colspan="4">Total</th>
+              <th colspan="2">{{total | currency: shoppingCartList[0].currency}}</th>
+            </tr>
+          </tfoot>
+        </table>
 
-        <h1>Shopping cart</h1>
-        <p class="text-muted">You currency have {{shoppingCartList.length}} item(s) in your cart.</p>
-        <div class="table-responsive">
-          <table class="table">
-            <thead>
-              <tr>
-                <th colspan="2">Product</th>
-                <th>Quantity</th>
-                <th>Unit price</th>
-                <th colspan="2">Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let shoppingCartItem of shoppingCartList">
-                <td>
-                  <img [src]="shoppingCartItem.pictureUrl">
-                </td>
-                <td>{{shoppingCartItem.productName}}
-                </td>
-                <td>
-                  {{shoppingCartItem.quantity}}
-                </td>
-                <td>{{shoppingCartItem.unitPrice | currency: shoppingCartItem.currency }}</td>
-                <td>{{shoppingCartItem.total | currency: shoppingCartItem.currency}}</td>
-                <td>
-                  <a (click)="deleteItem(shoppingCartItem.productId)">
-                    <i class="fa fa-trash-o"></i>
-                  </a>
-                </td>
-              </tr>
-            </tbody>
-            <tfoot>
-              <tr>
-                <th colspan="4">Total</th>
-                <th colspan="2">{{total | currency: shoppingCartList[0].currency}}</th>
-              </tr>
-            </tfoot>
-          </table>
+      </div>
+      <!-- /.table-responsive -->
 
+      <div class="box-footer">
+        <div class="pull-left">
+          <a [routerLink]="['/home']" class="btn btn-default"><i class="fa fa-chevron-left"></i> Continue shopping</a>
         </div>
-        <!-- /.table-responsive -->
-
-        <div class="box-footer">
-          <div class="pull-left">
-            <a [routerLink]="['/home']" class="btn btn-default"><i class="fa fa-chevron-left"></i> Continue shopping</a>
-          </div>
-          <div class="pull-right">
-            <button type="submit" class="btn btn-primary">Proceed to checkout <i class="fa fa-chevron-right"></i>
-            </button>
-          </div>
+        <div class="pull-right">
+          <a [routerLink]="['/check-out']" class="btn btn-primary">Proceed to checkout <i class="fa fa-chevron-right"></i>
+          </a>
         </div>
-
-      </form>
-
+      </div>
     </div>
   </div>
 </div>

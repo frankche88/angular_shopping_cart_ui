@@ -26,6 +26,7 @@ import { FirstShopComponent } from './components/shopping-cart/first-shop/first-
 import { BlockUIModule } from 'ng-block-ui';
 import { ToastrModule } from 'ngx-toastr';
 import { MessageAlertHandleService } from './shared/services/message-alert.service';
+import { CheckOutComponent } from './components/check-out/check-out.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { MessageAlertHandleService } from './shared/services/message-alert.servi
     ProductItemComponent,
     OrderDetailComponent,
     CustomerSectionComponent,
-    FirstShopComponent
+    FirstShopComponent,
+    CheckOutComponent
   ],
   imports: [
     ReactiveFormsModule,

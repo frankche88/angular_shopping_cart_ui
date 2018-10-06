@@ -8,6 +8,7 @@ import { ProductComponent } from './components/product/product.component';
 import { OrderDetailComponent } from './components/order/order-detail/order-detail.component';
 import { AuthorizationGuard } from './guards/authorization.guard';
 import { FirstShopComponent } from './components/shopping-cart/first-shop/first-shop.component';
+import { CheckOutComponent } from './components/check-out/check-out.component';
 
 const routes: Routes = [
     {
@@ -17,6 +18,11 @@ const routes: Routes = [
     {
         path: 'login',
         component: LoginComponent
+    },
+    {
+        path: 'check-out',
+        component: CheckOutComponent,
+        canActivate: [AuthorizationGuard]
     },
     {
         path: 'order',

@@ -5,7 +5,7 @@ export class ShoppingCartItem {
     productId: number;
     productName: string;
     pictureUrl: string;
-    quantity: number;
+    unit: number;
     unitPrice: number;
     currency: string;
     total: number;
@@ -18,6 +18,6 @@ export class ShoppingCartItem {
         this.pictureUrl = _pictureUrl;
         this.unitPrice = _unitPrice;
         this.currency = _currency;
-        this.quantity = 1;
+        this.unit = 1;
     }
 }
