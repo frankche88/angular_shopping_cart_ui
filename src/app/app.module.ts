@@ -23,6 +23,7 @@ import { CustomerSectionComponent } from './components/order/customer-section/cu
 import { ShoppingCartService } from './services/shopping-cart.service';
 import { AuthorizationGuard } from './guards/authorization.guard';
 import { FirstShopComponent } from './components/shopping-cart/first-shop/first-shop.component';
+import { BlockUIModule } from 'ng-block-ui';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,12 @@ import { FirstShopComponent } from './components/shopping-cart/first-shop/first-
     BrowserAnimationsModule,
     HttpClientModule,
     appRoutes,
-    Ng2UiAuthModule.forRoot(AuthConfig)
+    Ng2UiAuthModule.forRoot(AuthConfig),
+    BlockUIModule.forRoot(
+      {
+        message: 'Please wait...'
+      }
+    )
   ],
   providers: [AuthorizationGuard,JsonInterceptorService, ProductService,
     ShoppingCartService,

@@ -8,6 +8,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { debounceTime } from 'rxjs/operators';
 import { CustomValidators } from 'ng2-validation';
 import { ShoppingCartService } from '../../services/shopping-cart.service';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
 @Component({
     selector: 'app-login',
@@ -17,6 +18,7 @@ import { ShoppingCartService } from '../../services/shopping-cart.service';
 })
 
 export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
+    @BlockUI() blockUI: NgBlockUI;
     @ViewChildren(FormControlName, { read: ElementRef })
     formInputElements: ElementRef[] = [];
     displayMessage: { [key: string]: string } = {};
@@ -73,10 +75,13 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
 
     signUp(): void {
 
+        this.blockUI.start();
         const authLoginSubscription = this._authService.login(JSON.stringify(this.mainForm.value)).subscribe({
             error: (err: any) => {
+                this.blockUI.stop();
             },
             complete: () => {
+                this.blockUI.stop();
                 this.clearBasket();
                
             }
@@ -88,11 +93,14 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
 
     
   clearBasket(): void {
+    this.blockUI.start();
     const modelclearSubscription = this._shoppingCartService.deleteShoppingCart().subscribe(
       (response: any) => {
+        this.blockUI.stop();
         this._router.navigateByUrl(this.returnUrl);
       },
       (error: any) => {
+        this.blockUI.stop();
       }
     );
 

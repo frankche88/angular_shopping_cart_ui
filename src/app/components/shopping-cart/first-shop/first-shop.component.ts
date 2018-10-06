@@ -6,6 +6,7 @@ import { ProductService } from '../../../services/product.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../../../models/product';
 import { ShoppingCart } from '../../../models/shopping-cart';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
 @Component({
   selector: 'app-first-shop',
@@ -13,6 +14,7 @@ import { ShoppingCart } from '../../../models/shopping-cart';
   styleUrls: ['./first-shop.component.css']
 })
 export class FirstShopComponent implements OnInit, OnDestroy {
+  @BlockUI() blockUI: NgBlockUI;
 
   subscription: Subscription = new Subscription();
   
@@ -23,8 +25,11 @@ export class FirstShopComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.getProduct();
-
+    if(this.isAuthenticated()){
+      this.getProduct();
+    }else{
+      this._router.navigateByUrl(`/`)
+    }
   }
 
   
@@ -47,12 +52,15 @@ export class FirstShopComponent implements OnInit, OnDestroy {
           const productId: number = Number(params['productId']);
           
           if (productId === 0) { this._router.navigateByUrl(`/`);}
-
+          
+          this.blockUI.start();
           const modelSubscription = this._productService.get(productId).subscribe(
           (product: Product) => {
+            this.blockUI.stop();
             this.addToCart(product);
           },
           (error: any) => {
+            this.blockUI.stop();
           }
         );
     
@@ -63,12 +71,14 @@ export class FirstShopComponent implements OnInit, OnDestroy {
   
   addToCart(product: Product): void {
 
+    this.blockUI.start();
     const modelAddSubscription = this._shoppingCartService.AddItem(product).subscribe(
       (response: ShoppingCart) => {
-
+        this.blockUI.stop();
         this._router.navigateByUrl(`/shopping-cart`);
       },
       (error: any) => {
+        this.blockUI.stop();
       }
     );
 
