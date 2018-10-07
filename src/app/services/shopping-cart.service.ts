@@ -18,15 +18,20 @@ export class ShoppingCartService extends BaseResourceService<ShoppingCart> {
     }
 
     AddItem(product: Product): Observable<ShoppingCart> {
-
+        this.blockUI.start();
         const url = `${this.baseUrl}`;
+
         return this.http
             .post<ShoppingCart>(url, new ShoppingCartItem(product.id, product.name,
                 product.pictureUrl, product.price, product.currency)).pipe(
-                    catchError((error: any) => {
-                        this.messageAlertHandleService.handleError(error);
-                        return Observable.throw(error || 'Server error');
-                    }));
+                catchError((response: any) => {
+                    this.messageAlertHandleService.handleError(response.error);
+                    this.blockUI.stop();
+                    return Observable.throw(response.error || 'Server error');
+                }
+                ), finalize(() => {
+                    this.blockUI.stop();
+                }));
 
     }
 
@@ -43,8 +48,9 @@ export class ShoppingCartService extends BaseResourceService<ShoppingCart> {
     }
 
     deleteItem(productId: number): Observable<ShoppingCartItem[]> {
-
+        this.blockUI.start();
         const url = `${this.baseUrl}/product/${productId}`;
+
         return this.http
             .delete<ShoppingCartItem[]>(url).pipe(
                 catchError((response: any) => {

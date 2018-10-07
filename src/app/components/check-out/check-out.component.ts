@@ -110,9 +110,10 @@ export class CheckOutComponent implements OnInit {
         this.total = response.total;
 
         this.order.orderItems = response.items.map(o => {
-          return  new OrderItem (o.productId, o.productName,  o.pictureUrl,
-                                 o.unit, o.unitPrice , o.currency, o. total);});
-    
+          return new OrderItem(o.productId, o.productName, o.pictureUrl,
+            o.unit, o.unitPrice, o.currency, o.total);
+        });
+
         this._shoppingCartService.setNumberItems(this.order.orderItems.length);
       },
       (error: any) => {
@@ -121,25 +122,43 @@ export class CheckOutComponent implements OnInit {
     this.subscription.add(getSubscription);
   }
 
-  save(){
+  save() {
 
     if (this.mainForm.valid) {
 
-      this.order  = Object.assign({}, this.order, this.mainForm.value);
+      this.order = Object.assign({}, this.order, this.mainForm.value);
 
       const submitSubscription = this._orderService.save(this.order, 0).subscribe(
 
         (response: any) => {
-  
-          this._messageAlertHandleService.handleSuccess('order was completed succesfully');
-          this._router.navigateByUrl(`/`);
+
+          this.verifyBasketItems();
         },
         (error: any) => {
-        
+
         });
-  
+
       this.subscription.add(submitSubscription);
 
     }
   }
+
+  verifyBasketItems(): void {
+
+    const verifySubscription = this._shoppingCartService.getShoppingCart().subscribe(
+
+      (response: any) => {
+
+        this._shoppingCartService.setNumberItems(response.items.length);
+
+        this._messageAlertHandleService.handleSuccess('order was completed succesfully');
+
+        this._router.navigateByUrl(`/`);
+      },
+      (error: any) => {
+      });
+
+    this.subscription.add(verifySubscription);
+  }
+
 }

@@ -46,10 +46,9 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
 
     const deleteSubscription = this._shoppingCartService.deleteItem(productId).subscribe(
 
-      (response: ShoppingCartItem[]) => {
+      (response: any) => {
 
-        this.shoppingCartList = response;
-        this._shoppingCartService.setNumberItems(this.shoppingCartList.length);
+        this.getShoppingCart();
       },
       (error: any) => {
       });
