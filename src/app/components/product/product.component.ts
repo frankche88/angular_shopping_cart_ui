@@ -6,7 +6,6 @@ import { Product } from '../../models/product';
 import { ShoppingCartService } from '../../services/shopping-cart.service';
 import { ShoppingCart } from '../../models/shopping-cart';
 import { AuthService } from 'ng2-ui-auth';
-import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
 @Component({
   selector: 'app-product',
@@ -14,7 +13,6 @@ import { BlockUI, NgBlockUI } from 'ng-block-ui';
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit, OnDestroy {
-  @BlockUI() blockUI: NgBlockUI;
 
   subscription: Subscription = new Subscription();
   product: Product;
@@ -48,14 +46,11 @@ export class ProductComponent implements OnInit, OnDestroy {
 
     if (id === 0) { return; }
 
-    this.blockUI.start();
     const modelSubscription = this._productService.get(id).subscribe(
       (response: Product) => {
-        this.blockUI.stop();
         this.product = response;
       },
       (error: any) => {
-        this.blockUI.stop();
       }
 
     );
@@ -70,14 +65,11 @@ export class ProductComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.blockUI.start();
     const modelAddSubscription = this._shoppingCartService.AddItem(this.product).subscribe(
       (response: ShoppingCart) => {
-        this.blockUI.stop();
         this._router.navigateByUrl(`/shopping-cart`);
       },
       (error: any) => {
-        this.blockUI.stop();
       }
     );
 

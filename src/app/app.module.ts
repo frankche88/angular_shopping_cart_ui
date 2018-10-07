@@ -27,6 +27,7 @@ import { BlockUIModule } from 'ng-block-ui';
 import { ToastrModule } from 'ngx-toastr';
 import { MessageAlertHandleService } from './shared/services/message-alert.service';
 import { CheckOutComponent } from './components/check-out/check-out.component';
+import { OrderService } from './services/order.service';
 
 @NgModule({
   declarations: [
@@ -59,8 +60,9 @@ import { CheckOutComponent } from './components/check-out/check-out.component';
       }
     )
   ],
-  providers: [ MessageAlertHandleService, AuthorizationGuard, JsonInterceptorService, ProductService,
-    ShoppingCartService,
+  providers: [ MessageAlertHandleService, AuthorizationGuard,
+                JsonInterceptorService, ProductService,
+                ShoppingCartService,OrderService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JsonInterceptorService,
