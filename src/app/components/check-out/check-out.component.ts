@@ -10,6 +10,7 @@ import { ShoppingCart } from '../../models/shopping-cart';
 import { Order } from '../../models/order';
 import { OrderItem } from '../../models/order-item';
 import { Router } from '@angular/router';
+import { OrderService } from '../../services/order.service';
 
 @Component({
   selector: 'app-check-out',
@@ -31,6 +32,7 @@ export class CheckOutComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private _shoppingCartService: ShoppingCartService,
     private _messageAlertHandleService: MessageAlertHandleService,
+    private _orderService: OrderService,
     private _router: Router) {
 
     this.validationMessages = {
@@ -63,13 +65,9 @@ export class CheckOutComponent implements OnInit {
 
   ngOnInit() {
 
-    this.order = new Order();
-    this.order.orderItems = [];
-
     this.setUpFormControls();
 
     this.getShoppingCart();
-
 
   }
 
@@ -90,6 +88,9 @@ export class CheckOutComponent implements OnInit {
   }
 
   setUpFormControls(): void {
+
+    this.order = new Order();
+    this.order.orderItems = [];
 
     this.mainForm = this.fb.group({
       firstName: new FormControl('', [Validators.required, Validators.minLength(2)]),
@@ -121,12 +122,24 @@ export class CheckOutComponent implements OnInit {
   }
 
   save(){
+
     if (this.mainForm.valid) {
 
-      const model = Object.assign({}, this.order, this.mainForm.value);
+      this.order  = Object.assign({}, this.order, this.mainForm.value);
 
-      this._messageAlertHandleService.handleSuccess('order was completed succesfully');
-      this._router.navigateByUrl(`/`);
+      const submitSubscription = this._orderService.save(this.order, 0).subscribe(
+
+        (response: any) => {
+  
+          this._messageAlertHandleService.handleSuccess('order was completed succesfully');
+          this._router.navigateByUrl(`/`);
+        },
+        (error: any) => {
+        
+        });
+  
+      this.subscription.add(submitSubscription);
+
     }
   }
 }
