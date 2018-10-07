@@ -1,6 +1,13 @@
 <div class="container">
 
-  <app-customer-section> </app-customer-section>
+  <div class="col-md-12">
+    <ul class="breadcrumb">
+      <li><a [routerLink]="['/home']">Home</a></li>
+      <li>My orders</li>
+    </ul>
+  </div>
+
+  <app-customer-section></app-customer-section>
 
   <div class="col-md-9" id="customer-orders">
     <div class="box">

@@ -1,9 +1,15 @@
 <div class="container">
 
+  <div class="col-md-12">
+    <ul class="breadcrumb">
+      <li><a [routerLink]="['/home']">Home</a></li>
+      <li>Check-Out</li>
+    </ul>
+  </div>
   <div class="col-md-9">
 
     <div class="box" *ngIf="order && order.orderItems.length > 0">
-      <form novalidate  (ngSubmit)="save()" [formGroup]="mainForm">
+      <form novalidate (ngSubmit)="save()" [formGroup]="mainForm">
         <h1>Check-Out</h1>
 
         <div class="content">
@@ -47,7 +53,8 @@
             <div class="col-sm-6 col-md-6">
               <div class="form-group">
                 <div [ngClass]="{'has-error': displayMessage.creditCardNumber }">
-                  <input class="form-control" placeholder="Credit Card Number" formControlName="creditCardNumber"  maxlength="16"/>
+                  <input class="form-control" placeholder="Credit Card Number" formControlName="creditCardNumber"
+                    maxlength="16" />
                   <span class="help-block" *ngIf="displayMessage.creditCardNumber">
                     {{displayMessage.creditCardNumber}}
                   </span>
@@ -58,7 +65,8 @@
 
               <div class="form-group">
                 <div [ngClass]="{'has-error': displayMessage.creditCardAuthCode }">
-                  <input class="form-control" placeholder="Credit Card Auth Code" formControlName="creditCardAuthCode"  maxlength="3"/>
+                  <input class="form-control" placeholder="Credit Card Auth Code" formControlName="creditCardAuthCode"
+                    maxlength="3" />
                   <span class="help-block" *ngIf="displayMessage.creditCardAuthCode">
                     {{displayMessage.creditCardAuthCode}}
                   </span>
@@ -92,7 +100,7 @@
       <div class="box-header">
         <h3>Order summary</h3>
       </div>
-      <div class="table-responsive"  *ngIf="order.orderItems && order.orderItems.length > 0">
+      <div class="table-responsive" *ngIf="order.orderItems && order.orderItems.length > 0">
         <table class="table">
           <tbody>
             <tr *ngFor="let items of order.orderItems">
