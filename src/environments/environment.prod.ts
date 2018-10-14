@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl : 'https://shoppingcartgateway-courteous-crane.cfapps.io/'
+  apiUrl : 'https://shoppingcartgateway-terrific-duiker.cfapps.io/'
 };
