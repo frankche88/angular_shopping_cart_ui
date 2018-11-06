@@ -64,7 +64,7 @@ import { RegisterComponent } from './components/register/register.component';
   ],
   providers: [ MessageAlertHandleService, AuthorizationGuard,
                 JsonInterceptorService, ProductService,
-                ShoppingCartService,OrderService,
+                ShoppingCartService, OrderService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JsonInterceptorService,

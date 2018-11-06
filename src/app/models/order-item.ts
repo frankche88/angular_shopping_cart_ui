@@ -1,4 +1,4 @@
-import { BaseEntity } from "./base-entity";
+import { BaseEntity } from './base-entity';
 
 export class OrderItem extends BaseEntity {
 
@@ -13,7 +13,7 @@ export class OrderItem extends BaseEntity {
     constructor(_productId: number, _productName: string,
         _pictureUrl: string,
         _unit: number, _unitPrice: number,
-         _currency: string,_total: number) {
+         _currency: string, _total: number) {
         super();
 
         this.productId = _productId;
@@ -23,7 +23,6 @@ export class OrderItem extends BaseEntity {
         this.unitPrice = _unitPrice;
         this.currency = _currency;
         this.total = _total;
-        
     }
 
 }

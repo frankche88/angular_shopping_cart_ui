@@ -1,5 +1,3 @@
-import { BaseEntity } from './base-entity';
-
 export class ShoppingCartItem {
 
     productId: number;
@@ -9,10 +7,10 @@ export class ShoppingCartItem {
     unitPrice: number;
     currency: string;
     total: number;
-    
+
     constructor(_productId: number, _productName: string,
                  _pictureUrl: string, _unitPrice: number, _currency: string) {
-    
+
         this.productId = _productId;
         this.productName = _productName;
         this.pictureUrl = _pictureUrl;

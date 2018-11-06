@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChildren, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControlName, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { GenericValidator } from '../../shared/validators/generic-validator';
 import { Subscription, Observable, fromEvent, merge } from 'rxjs';
@@ -17,7 +17,7 @@ import { OrderService } from '../../services/order.service';
   templateUrl: './check-out.component.html',
   styleUrls: ['./check-out.component.css']
 })
-export class CheckOutComponent implements OnInit {
+export class CheckOutComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChildren(FormControlName, { read: ElementRef })
   formInputElements: ElementRef[] = [];

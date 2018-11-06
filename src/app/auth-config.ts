@@ -5,4 +5,5 @@ export const AuthConfig = {
     tokenPrefix : '',
     tokenName : 'access_token',
     signupUrl : environment.apiUrl + 'auth/register'
-}
+};
+

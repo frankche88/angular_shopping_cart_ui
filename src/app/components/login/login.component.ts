@@ -52,8 +52,8 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
     ngOnInit(): void {
 
         this.mainForm = this.fb.group({
-            email: new FormControl('member@test.com', [Validators.required, Validators.minLength(5), CustomValidators.email]),
-            password: new FormControl('P@$$w0rd', [Validators.required, Validators.minLength(6)])
+            email: new FormControl('', [Validators.required, Validators.minLength(5), CustomValidators.email]),
+            password: new FormControl('', [Validators.required, Validators.minLength(6)])
 
         });
 

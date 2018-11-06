@@ -6,11 +6,11 @@
         </div>
         <div class="col-md-6" data-animate="fadeInDown">
             <ul class="menu">
-                <li *ngIf="!isAuthenticated()"><a [routerLink]="['login']">Login</a></li>
-                <li *ngIf="!isAuthenticated()"><a [routerLink]="['register']">SignUp</a></li>
+                <li *ngIf="!isAuthenticated()"><a [routerLink]="['login']">Log In</a></li>
+                <li *ngIf="!isAuthenticated()"><a [routerLink]="['register']">Sign Up</a></li>
                 <li *ngIf="isAuthenticated()">
                     <span class="user-name"> Hi <a  [routerLink]="['order']">  {{getUserName()}} </a>|</span>
-                    <a (click)="logOut()"><i class="fa fa-sign-out fa-fw" ></i>LogOut</a>
+                    <a (click)="logOut()"><i class="fa fa-sign-out fa-fw" ></i>Log Out</a>
                 </li>
             </ul>
         </div>

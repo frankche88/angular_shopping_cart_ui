@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , OnDestroy} from '@angular/core';
 import { Order } from '../../models/order';
 import { Subscription } from 'rxjs';
 import { OrderService } from '../../services/order.service';
@@ -8,7 +8,7 @@ import { OrderService } from '../../services/order.service';
   templateUrl: './order.component.html',
   styleUrls: ['./order.component.css']
 })
-export class OrderComponent implements OnInit {
+export class OrderComponent implements OnInit, OnDestroy {
 
   orders: Order[] = [];
   subscription: Subscription = new Subscription();
@@ -19,7 +19,6 @@ export class OrderComponent implements OnInit {
     this.getOrders();
   }
 
-  
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }

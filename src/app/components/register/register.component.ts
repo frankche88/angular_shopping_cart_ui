@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChildren } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChildren, AfterViewInit, OnDestroy } from '@angular/core';
 import { NgBlockUI, BlockUI } from 'ng-block-ui';
 import { FormGroup, FormBuilder, FormControlName, FormControl, Validators } from '@angular/forms';
 import { GenericValidator } from 'src/app/shared/validators/generic-validator';
@@ -14,7 +14,7 @@ import { AuthService } from 'ng2-ui-auth';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @BlockUI() blockUI: NgBlockUI;
   @ViewChildren(FormControlName, { read: ElementRef })
@@ -34,7 +34,7 @@ export class RegisterComponent implements OnInit {
         userName: {
           required: 'UserName is required.',
           minlength: 'UserName must be at least 3 characters.'
-      }, 
+      },
         email: {
               required: 'Email is required.',
               minlength: 'Email must be at least 5 characters.',
@@ -79,15 +79,12 @@ export class RegisterComponent implements OnInit {
    signUp(): void {
 
     if (this.mainForm.dirty && this.mainForm.valid) {
-
-      let model =  this.mainForm.value;
-
       this.blockUI.start();
-      
-      let signUpSubscription =  this._authService.signup(JSON.stringify(this.mainForm.value)).subscribe(
+
+      const signUpSubscription =  this._authService.signup(JSON.stringify(this.mainForm.value)).subscribe(
         (response) => {
 
-            this._authService.setToken(response)
+            this._authService.setToken(response);
             this._messageAlertHandleService.handleSuccess('account was created successfully');
             this.mainForm.reset();
             this.blockUI.stop();
@@ -102,7 +99,5 @@ export class RegisterComponent implements OnInit {
 
       this.subscription.add(signUpSubscription);
     }
-
   }
-
 }

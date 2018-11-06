@@ -12,7 +12,7 @@ import { ShoppingCartService } from '../../../services/shopping-cart.service';
 export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public userName: string;
-  public totalItems: number = 0;
+  public totalItems = 0;
   private subscription: Subscription = new Subscription();
 
   constructor(private _authService: AuthService, private _router: Router,
