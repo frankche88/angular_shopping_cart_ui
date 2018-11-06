@@ -85,11 +85,13 @@ export class RegisterComponent implements OnInit {
       this.blockUI.start();
       
       let signUpSubscription =  this._authService.signup(JSON.stringify(this.mainForm.value)).subscribe(
-        () => {
-          this._messageAlertHandleService.handleSuccess('account was created successfully');
-          this.mainForm.reset();
-          this.blockUI.stop();
-          this._router.navigate(['/home']);
+        (response) => {
+
+            this._authService.setToken(response)
+            this._messageAlertHandleService.handleSuccess('account was created successfully');
+            this.mainForm.reset();
+            this.blockUI.stop();
+            this._router.navigate(['/home']);
         },
         error => {
           this._messageAlertHandleService.handleError(error.error.message);
