@@ -28,6 +28,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { MessageAlertHandleService } from './shared/services/message-alert.service';
 import { CheckOutComponent } from './components/check-out/check-out.component';
 import { OrderService } from './services/order.service';
+import { RegisterComponent } from './components/register/register.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { OrderService } from './services/order.service';
     OrderDetailComponent,
     CustomerSectionComponent,
     FirstShopComponent,
-    CheckOutComponent
+    CheckOutComponent,
+    RegisterComponent
   ],
   imports: [
     ReactiveFormsModule,

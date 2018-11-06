@@ -37,12 +37,12 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
         this.validationMessages = {
             email: {
                 required: 'Email is required.',
-                minlength: 'Email must be at least 4 characters.',
+                minlength: 'Email must be at least 5 characters.',
                 email: 'Please enter a valid email address.'
             },
             password: {
                 required: 'Password is required.',
-                minlength: 'Password must be at least 5 characters.'
+                minlength: 'Password must be at least 6 characters.'
             }
         };
 
@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
 
         this.mainForm = this.fb.group({
             email: new FormControl('member@test.com', [Validators.required, Validators.minLength(5), CustomValidators.email]),
-            password: new FormControl('P@$$w0rd', [Validators.required, Validators.minLength(5)])
+            password: new FormControl('P@$$w0rd', [Validators.required, Validators.minLength(6)])
 
         });
 
@@ -76,7 +76,7 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
         this.subscription.unsubscribe();
     }
 
-    signUp(): void {
+    signIn(): void {
         this.blockUI.start();
         const authLoginSubscription = this._authService.login(JSON.stringify(this.mainForm.value)).subscribe({
             error: (response: any) => {

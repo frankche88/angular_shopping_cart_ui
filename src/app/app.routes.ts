@@ -1,4 +1,4 @@
-import { Route, RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { ModuleWithProviders } from '@angular/core';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
@@ -9,6 +9,7 @@ import { OrderDetailComponent } from './components/order/order-detail/order-deta
 import { AuthorizationGuard } from './guards/authorization.guard';
 import { FirstShopComponent } from './components/shopping-cart/first-shop/first-shop.component';
 import { CheckOutComponent } from './components/check-out/check-out.component';
+import { RegisterComponent } from './components/register/register.component';
 
 const routes: Routes = [
     {
@@ -18,6 +19,10 @@ const routes: Routes = [
     {
         path: 'login',
         component: LoginComponent
+    },
+    {
+        path: 'register',
+        component: RegisterComponent
     },
     {
         path: 'check-out',
