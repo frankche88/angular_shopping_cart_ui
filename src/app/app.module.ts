@@ -29,6 +29,7 @@ import { MessageAlertHandleService } from './shared/services/message-alert.servi
 import { CheckOutComponent } from './components/check-out/check-out.component';
 import { OrderService } from './services/order.service';
 import { RegisterComponent } from './components/register/register.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,7 @@ import { RegisterComponent } from './components/register/register.component';
     CustomerSectionComponent,
     FirstShopComponent,
     CheckOutComponent,
-    RegisterComponent
+    RegisterComponent,
   ],
   imports: [
     ReactiveFormsModule,
@@ -54,6 +55,7 @@ import { RegisterComponent } from './components/register/register.component';
     BrowserAnimationsModule,
     HttpClientModule,
     appRoutes,
+    NgxPaginationModule,
     Ng2UiAuthModule.forRoot(AuthConfig),
     ToastrModule.forRoot(),
     BlockUIModule.forRoot(

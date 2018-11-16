@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, finalize } from 'rxjs/operators';
 import { MessageAlertHandleService } from '../shared/services/message-alert.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { PaginationResult } from '../models/pagination-result';
+import { Pagination } from '../models/pagination';
 
 export abstract class BaseResourceService<T> {
     @BlockUI() blockUI: NgBlockUI;
@@ -13,6 +15,20 @@ export abstract class BaseResourceService<T> {
 
         this.baseUrl = environment.apiUrl + _url;
 
+    }
+
+    public gePaginatedAll(pagination: Pagination): Observable<PaginationResult> {
+
+        this.blockUI.start();
+        return this._http.get<PaginationResult>(this.getHttpUrl(pagination)).pipe(
+            catchError((response: any) => {
+                this._messageAlertHandleService.handleError(response.error);
+                this.blockUI.stop();
+                return Observable.throw(response.error || 'Server error');
+            }
+            ), finalize(() => {
+                this.blockUI.stop();
+            }));
     }
 
     public getAll(): Observable<T[]> {
@@ -87,5 +103,29 @@ export abstract class BaseResourceService<T> {
             return this.insert(entity);
         }
         return this.update(entity, id);
+    }
+
+    private getHttpUrl(pagination: Pagination): string {
+
+        let url = this.baseUrl;
+
+        if (pagination.currentPage !== undefined) {
+
+            url = `${url}?page=${pagination.currentPage}`;
+        }
+
+        if (pagination.pageSize !== undefined) {
+            url = `${url}&pageSize=${pagination.pageSize}`;
+        }
+
+        if (pagination.sortBy !== undefined) {
+            url = `${url}&sortBy=${pagination.sortBy}`;
+        }
+
+        if (pagination.sortDirection !== undefined) {
+            url = `${url}&sortDirection=${pagination.sortDirection}`;
+        }
+
+        return url;
     }
 }
