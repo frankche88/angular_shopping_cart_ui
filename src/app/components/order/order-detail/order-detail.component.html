@@ -5,7 +5,7 @@
     <ul class="breadcrumb">
       <li><a [routerLink]="['/home']">Home</a></li>
         <li><a [routerLink]="['/order']">My orders</a> </li>
-        <li>Order #{{order.id}}</li>
+        <li *ngIf="order">Order #{{order.id}}</li>
     </ul>
 
 </div>
